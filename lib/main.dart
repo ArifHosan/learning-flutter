@@ -22,6 +22,20 @@ class MyApp extends StatelessWidget {
           child: HomePage(),
         ),
       ),
+      routes: <String, WidgetBuilder>{
+        '/random-words': (BuildContext context) =>
+            commonNavigator('random-words')
+      },
+    );
+  }
+
+  commonNavigator(name) {
+    var childObject;
+    if (name == "random-words") childObject = RandomWords();
+    return Scaffold(
+      body: Center(
+        child: childObject,
+      ),
     );
   }
 }
@@ -31,23 +45,21 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: RaisedButton(
-            color: Colors.lightBlue,
-            onPressed: randomWordNavigator,
-            child: Text('Random Words Generator')),
-      ),
+          child: ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(20.0),
+        children: <Widget>[
+          Center(
+              child: RaisedButton(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  color: Colors.lightBlue,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/random-words');
+                  },
+                  child: Text('Random Words Generator')))
+        ],
+      )),
     );
-  }
-
-  void randomWordNavigator() {
-    Navigator.of(context)
-        .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-      return Scaffold(
-        body: Center(
-          child: RandomWords(),
-        ),
-      );
-    }));
   }
 }
 
